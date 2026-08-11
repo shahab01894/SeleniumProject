@@ -66,6 +66,26 @@ namespace AmazonTest
                 test.Log(Status.Pass, "User login successfully.");
             }
         }
+        [Test]
+        [Category("Smoke")]
+            
+        public void CStoreLoginFails()
+        {
+            var userDetails = _utilities.GetEmployeeData();
+            test.Log(Status.Info, "Reading test data from Excel (TestData/Book1.xlsx)...");
+            _signup.SignIn(userDetails["email"], userDetails["password"]);
+            bool value = _signup.IsLoginErrorDisplayed();
+            if (value)
+            {
+                test.Log(Status.Fail, "Can you please enter the valid username and password");
+
+            }
+            else
+            {
+                test.Log(Status.Pass, "User login successfully.");
+                test.Log(Status.Pass, "User login successfully.");
+            }
+        }
         [TearDown]
         public void TearDown()
         {
