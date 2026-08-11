@@ -22,9 +22,17 @@ namespace AmazonTest
             test.Log(Status.Info, "Navigated to the portal");
             var options = new ChromeOptions();
 
-            // Removes the "Chrome is being controlled by automated test software" bar
             options.AddExcludedArgument("enable-automation");
             options.AddAdditionalOption("useAutomationExtension", false);
+            options.AddArgument("--incognito");
+
+            // Required for CI runners (no display available)
+            options.AddArgument("--headless=new");
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-dev-shm-usage");
+            options.AddArgument("--window-size=1920,1080");
+
+                      
             //options.AddArgument("--incognito");
             driver = new ChromeDriver(options);
             driver.Navigate().GoToUrl(MyResource.DemoURl);
