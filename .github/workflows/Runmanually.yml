@@ -1,0 +1,40 @@
+# This workflow lets you manually run the test suite on demand from the GitHub Actions tab.
+# For more information see: https://docs.github.com/en/actions/using-workflows/manually-running-a-workflow
+
+name: .NET Manual Test Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_category:
+        description: 'Test category to run (leave blank to run ALL tests)'
+        required: false
+        default: ''
+        type: string
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Run all tests (no category specified)
+      if: ${{ github.event.inputs.test_category == '' }}
+      run: dotnet test --no-build --configuration Release --verbosity normal
+
+    - name: Run tests filtered by category
+      if: ${{ github.event.inputs.test_category != '' }}
+      run: dotnet test --no-build --configuration Release --verbosity normal --filter "TestCategory=${{ github.event.inputs.test_category }}"
