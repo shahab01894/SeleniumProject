@@ -27,7 +27,8 @@ namespace AmazonTest
             options.AddAdditionalOption("useAutomationExtension", false);
             //options.AddArgument("--incognito");
             driver = new ChromeDriver(options);
-            driver.Navigate().GoToUrl("https://demoqa.com/webtables");
+            driver.Navigate().GoToUrl(MyResource.DemoURl);
+            //driver.Navigate().GoToUrl("https://demoqa.com/webtables");
            // driver.Navigate().GoToUrl("https://dashboard.cstoregenie.app/");
         
             driver.Manage().Window.Maximize();
