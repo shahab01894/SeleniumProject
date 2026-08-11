@@ -83,6 +83,7 @@ namespace AmazonTest
             else
             {
                 test.Log(Status.Pass, "User login successfully.");
+                test.Log(Status.Pass, "User login successfully.");
             }
         }
         [TearDown]
